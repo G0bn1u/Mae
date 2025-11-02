@@ -3,6 +3,26 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Home, AlertCircle, Heart, BookOpen, FileText, Link as LinkIcon, Calendar, Package, FolderOpen, Lightbulb, Dice6, BookMarked, LogOut, Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
+// frontend/src/components/Layout.jsx
+import React from "react";
+import "../App.css"; // s'assurer que les styles globaux sont chargés
+
+export default function Layout({ children }) {
+  return (
+    <>
+      <header className="header">
+        <div className="logo">Mae</div>
+        <nav className="nav">
+          {/* liens existants */}
+        </nav>
+      </header>
+
+      <main className="container">
+        {children}
+      </main>
+    </>
+  );
+}
 
 const Layout = ({ children }) => {
   const location = useLocation();

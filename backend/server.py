@@ -432,6 +432,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+import os
+
+NAS_IP = os.getenv("NAS_IP", "192.168.1.42")  # ← remplace par l'IP locale de ton NAS si tu la connais
+ALLOWED_ORIGINS = [
+    f"http://{NAS_IP}:3000",
+    f"http://{NAS_IP}",
+    f"https://{NAS_IP}",
+    # Ajoute ici ton domaine si tu en utilises un plus tard :
+    # "https://mae.synology.me",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
