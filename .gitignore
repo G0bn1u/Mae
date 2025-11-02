@@ -1,0 +1,18 @@
+# Node / front
+node_modules/
+dist/
+.build/
+.next/
+out/
+.pnp.*
+*.log
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/

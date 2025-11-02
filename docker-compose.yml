@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: mae-eliot-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=mae_eliot
+    networks:
+      - mae-eliot-network
+
+  backend:
+    build: ./backend
+    container_name: mae-eliot-backend
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - DB_NAME=mae_eliot
+      - SECRET_KEY=MonSuperMotDePasseComplexe2024!@#
+    depends_on:
+      - mongodb
+    networks:
+      - mae-eliot-network
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_BACKEND_URL=/api
+    container_name: mae-eliot-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mae-eliot-network
+
+networks:
+  mae-eliot-network:
+    driver: bridge
